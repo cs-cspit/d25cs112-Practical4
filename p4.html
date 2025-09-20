@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            background: #fff6f6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #c62828, #e53935);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        /* Notification */
+        .notification {
+            background: #b71c1c;
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .notification .dismiss {
+            position: absolute;
+            right: 14px;
+            top: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .faq {
+            background: white;
+            margin: 10px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-question {
+            background: #e53935;
+            color: white;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 14px;
+            background: #fff2f2;
+            border-left: 4px solid #e53935;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: #fff7f7;
+            padding: 25px;
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+            border: 2px solid #e53935;
+            position: relative;
+        }
+
+        .popup-content h3 {
+            margin-top: 0;
+            color: #c62828;
+        }
+
+        .popup-content .close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #c62828;
+        }
+
+        /* Slider */
+        .slider {
+            max-width: 900px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .slides {
+            display: none;
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            background: rgba(183, 28, 28, 0.7);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            user-select: none;
+        }
+
+        .next {
+            right: 12px;
+        }
+
+        .prev {
+            left: 12px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>&#127891; Student Portal</h1>
+        <p>Your academics, resources, and updates — all in one place</p>
+    </header>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        &#128227; New semester starts from <b>October 1st, 2025</b>. Check your timetable now!
+        <span class="dismiss" id="dismissNote">&#10006;</span>
+    </div>
+
+    <!-- FAQ Section (3 only) -->
+    <section class="faq-section">
+        <h2 style="text-align:center; color:#b71c1c;">&#10067; Frequently Asked Questions</h2>
+
+        <div class="faq">
+            <div class="faq-question">&#128073; How do I register for new courses?</div>
+            <div class="faq-answer">&#128218; Go to the "My Courses" section, click "Add Course", and select from the available subjects for this semester.</div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question">&#128073; Where can I download study material?</div>
+            <div class="faq-answer">&#128218; All notes, presentations, and lab files are available under the "Resources" tab of your dashboard.</div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question">&#128073; How do I apply for leave?</div>
+            <div class="faq-answer">&#128221; You can submit a leave request through the "Student Support" section. Faculty advisors will review and approve it.</div>
+        </div>
+    </section>
+
+    <!-- Popup Notice -->
+    <div style="text-align:center; margin:20px;">
+        <button id="openPopup"
+            style="padding:10px 18px; background:#c62828; color:white; border:none; border-radius:8px; cursor:pointer;">
+            &#128204; View Important Notice
+        </button>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&#10006;</span>
+            <h3>&#128227; Important Update</h3>
+            <p>&#128197; Mid-term examinations will begin from <b>October 20th, 2025</b>. Detailed timetable will be shared on the portal soon.</p>
+        </div>
+    </div>
+
+    <!-- Slider with 5 images -->
+    <div class="slider">
+        <img class="slides"
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80"
+            alt="Library">
+        <img class="slides"
+            src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80"
+            alt="Students in class">
+        <img class="slides"
+            src="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1200&q=80"
+            alt="Campus view">
+        <img class="slides"
+            src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80"
+            alt="Books">
+        <img class="slides"
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+            alt="Team study">
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <script>
+        // Notification Dismiss
+        document.getElementById("dismissNote").onclick = () => {
+            document.getElementById("notification").style.display = "none";
+        };
+
+        // FAQ Toggle
+        document.querySelectorAll(".faq-question").forEach((q) => {
+            q.addEventListener("click", () => {
+                const answer = q.nextElementSibling;
+                answer.style.display = (answer.style.display === "block") ? "none" : "block";
+            });
+        });
+
+        // Popup
+        const popup = document.getElementById("popup");
+        document.getElementById("openPopup").onclick = () => popup.style.display = "flex";
+        document.getElementById("closePopup").onclick = () => popup.style.display = "none";
+        window.onclick = (e) => { if (e.target == popup) popup.style.display = "none"; };
+
+        // Slider
+        let index = 1;
+        showSlides(index);
+
+        function plusSlides(n) { showSlides(index += n); }
+
+        function showSlides(n) {
+            const slides = document.getElementsByClassName("slides");
+            if (n > slides.length) index = 1;
+            if (n < 1) index = slides.length;
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[index - 1].style.display = "block";
+        }
+
+        // Auto Slide
+        setInterval(() => { plusSlides(1); }, 4000);
+    </script>
+
+</body>
+
+</html>
